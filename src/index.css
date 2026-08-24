@@ -613,6 +613,15 @@ main {
   .footer-socials {
     justify-content: center !important;
   }
+
+  /* Added mobile grid and form handling */
+  .featured-grid, .topics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
 }
 
 .mobile-menu-btn { display: none; }
