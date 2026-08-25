@@ -19,5 +19,12 @@ export const works = [
     description: 'A modern web application for Digital Product Passports, focusing on elegant UI and smooth interactions.',
     url: 'https://continuo-digital-product-passports.vercel.app/',
     image: '/continuo.png', // The user will provide this screenshot in the public folder
+  },
+  {
+    id: 4,
+    title: 'Pixel Peak Media',
+    description: 'A visually striking media agency portfolio showcasing creative work and digital services.',
+    url: 'https://pixel-peak-media.vercel.app/',
+    image: '/pixel-peak.png', // The user will provide this screenshot in the public folder
   }
 ];
