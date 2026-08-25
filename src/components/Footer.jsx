@@ -30,7 +30,6 @@ export default function Footer() {
           <div className="footer-links-col">
             <h4 style={{ marginBottom: '16px', color: 'var(--text-main)' }}>Navigation</h4>
             <Link to="/" onClick={scrollToTop}>Home</Link>
-            <a href="/#topics">Topics</a>
             <a href="/#works">My Works</a>
             <a href="/#insights">Latest Insights</a>
           </div>

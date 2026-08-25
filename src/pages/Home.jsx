@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Cpu, DollarSign, Heart, ArrowRight, ExternalLink, Sparkles, TrendingUp, BookOpen } from 'lucide-react';
+import { ArrowRight, ExternalLink, Sparkles, TrendingUp, BookOpen } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { articles } from '../data/articles';
 import { works } from '../data/works';
@@ -150,46 +150,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
-      {/* Topics Section */}
-      <section id="topics" className="topics container">
-        <motion.div
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <span className="section-eyebrow">What I Write About</span>
-          <h2 className="section-title">Core Topics</h2>
-        </motion.div>
-        <div className="topics-grid">
-          {[
-            { to: '/category/technology', Icon: Cpu, label: 'Technology', desc: 'Deep dives into software engineering, emerging trends, AI, and building robust systems.', color: 'var(--accent-cyan)', num: '01' },
-            { to: '/category/money', Icon: DollarSign, label: 'Money', desc: 'Practical frameworks for personal finance, investing, business building, and wealth preservation.', color: '#10b981', num: '02' },
-            { to: '/category/life-growth', Icon: Heart, label: 'Life & Growth', desc: 'Mental models, productivity systems, stoic philosophy, and mastering the human experience.', color: '#f43f5e', num: '03' },
-          ].map(({ to, Icon, label, desc, color, num }, i) => (
-            <motion.div
-              key={num}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-            >
-              <Link to={to} className="topic-card glass-panel topic-card-creative" style={{ display: 'block' }}>
-                <span className="topic-number">{num}</span>
-                <div className="topic-icon" style={{ color, background: `${color}18` }}>
-                  <Icon size={32} />
-                </div>
-                <h3>{label}</h3>
-                <p>{desc}</p>
-                <span className="read-more" style={{ color, marginTop: '16px' }}>
-                  Explore <ArrowRight size={16} />
-                </span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
       {/* Featured Video */}
       <section id="video" className="video-section container">

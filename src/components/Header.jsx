@@ -37,7 +37,6 @@ export default function Header() {
         
         <nav className="nav-links">
           <Link to="/" onClick={handleHomeClick}>Home</Link>
-          <a href="/#topics">Topics</a>
           <a href="/#works">Works</a>
           <a href="/#insights">Insights</a>
           <a href="/#newsletter">Newsletter</a>
@@ -64,7 +63,6 @@ export default function Header() {
             className="mobile-menu glass-panel"
           >
             <Link to="/" onClick={handleHomeClick}>Home</Link>
-            <a href="/#topics" onClick={closeMobileMenu}>Topics</a>
             <a href="/#works" onClick={closeMobileMenu}>Works</a>
             <a href="/#insights" onClick={closeMobileMenu}>Insights</a>
             <a href="/#newsletter" onClick={closeMobileMenu}>Newsletter</a>
