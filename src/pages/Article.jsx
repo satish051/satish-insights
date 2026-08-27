@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { motion } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { articles } from '../data/articles';
 import Newsletter from '../components/Newsletter';
 
@@ -34,6 +34,8 @@ export default function Article() {
     );
   }
 
+  const { scrollYProgress } = useScroll();
+
   return (
     <motion.main
       initial={{ opacity: 0, y: 10 }}
@@ -41,6 +43,19 @@ export default function Article() {
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
     >
+      <motion.div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '4px',
+          background: article.color || 'var(--accent-cyan)',
+          transformOrigin: '0%',
+          scaleX: scrollYProgress,
+          zIndex: 1000
+        }}
+      />
       <article className="container" style={{paddingTop: '60px', paddingBottom: '80px', maxWidth: '800px'}}>
         <div style={{marginBottom: '32px'}}>
           <Link to="/" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)'}}>

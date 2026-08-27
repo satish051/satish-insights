@@ -1,4 +1,5 @@
 import React from 'react';
+import MagneticButton from './MagneticButton';
 
 export default function Newsletter() {
   return (
@@ -8,7 +9,9 @@ export default function Newsletter() {
         <p>Get a weekly digest of simple, high-signal insights on technology, money, and building a meaningful life.</p>
         <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
           <input type="email" placeholder="Your best email" required />
-          <button type="submit" className="btn-primary">Subscribe</button>
+          <MagneticButton className="btn-primary hover-target" onClick={(e) => e.target.closest('form').dispatchEvent(new Event('submit'))}>
+            Subscribe
+          </MagneticButton>
         </form>
       </div>
     </section>
