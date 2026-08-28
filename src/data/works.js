@@ -10,7 +10,7 @@ export const works = [
     id: 2,
     title: 'RAC Kirtipur',
     description: 'A dynamic community website built for the Rotaract Club of Kirtipur to highlight events and initiatives.',
-    url: 'https://rackirtipur.netlify.app/',
+    url: 'https://rackirtipur.onrender.com/',
     image: '/rac.png', // The user will provide this screenshot in the public folder
   },
   {
