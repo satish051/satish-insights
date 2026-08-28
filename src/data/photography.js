@@ -1,38 +1,122 @@
 export const photos = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
-    title: "Urban Geometry",
-    description: "Finding symmetry in the concrete jungle."
+    url: "/photos/photo-1.jpeg",
+    title: "Photography 1",
+    description: "A glimpse into the moments captured."
   },
   {
     id: 2,
-    url: "https://images.unsplash.com/photo-1506744626753-1fa44df31c7f?auto=format&fit=crop&q=80&w=800",
-    title: "Nature's Silence",
-    description: "The golden hour at the peaks."
+    url: "/photos/photo-2.jpeg",
+    title: "Photography 2",
+    description: "A glimpse into the moments captured."
   },
   {
     id: 3,
-    url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=800",
-    title: "City Lights",
-    description: "Long exposure nights."
+    url: "/photos/photo-3.jpeg",
+    title: "Photography 3",
+    description: "A glimpse into the moments captured."
   },
   {
     id: 4,
-    url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=800",
-    title: "Minimalist Horizon",
-    description: "Less is more."
+    url: "/photos/photo-4.jpeg",
+    title: "Photography 4",
+    description: "A glimpse into the moments captured."
   },
   {
     id: 5,
-    url: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=800",
-    title: "Deep Woods",
-    description: "Lost in the textures of nature."
+    url: "/photos/photo-5.jpeg",
+    title: "Photography 5",
+    description: "A glimpse into the moments captured."
   },
   {
     id: 6,
-    url: "https://images.unsplash.com/photo-1470071131384-001b85755b36?auto=format&fit=crop&q=80&w=800",
-    title: "Reflections",
-    description: "Mirror of the sky."
+    url: "/photos/photo-6.jpeg",
+    title: "Photography 6",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 7,
+    url: "/photos/photo-7.jpeg",
+    title: "Photography 7",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 8,
+    url: "/photos/photo-8.jpeg",
+    title: "Photography 8",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 9,
+    url: "/photos/photo-9.jpeg",
+    title: "Photography 9",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 10,
+    url: "/photos/photo-10.jpeg",
+    title: "Photography 10",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 11,
+    url: "/photos/photo-11.jpeg",
+    title: "Photography 11",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 12,
+    url: "/photos/photo-12.jpeg",
+    title: "Photography 12",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 13,
+    url: "/photos/photo-13.jpeg",
+    title: "Photography 13",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 14,
+    url: "/photos/photo-14.jpeg",
+    title: "Photography 14",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 15,
+    url: "/photos/photo-15.jpeg",
+    title: "Photography 15",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 16,
+    url: "/photos/photo-16.jpeg",
+    title: "Photography 16",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 17,
+    url: "/photos/photo-17.jpeg",
+    title: "Photography 17",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 18,
+    url: "/photos/photo-18.jpeg",
+    title: "Photography 18",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 19,
+    url: "/photos/photo-19.jpeg",
+    title: "Photography 19",
+    description: "A glimpse into the moments captured."
+  },
+  {
+    id: 20,
+    url: "/photos/photo-20.jpeg",
+    title: "Photography 20",
+    description: "A glimpse into the moments captured."
   }
 ];
