@@ -1335,4 +1335,50 @@ body.dark .astral-frozen {
   .scroll-indicator {
     display: none;
   }
+  
+  /* Additional Global Responsiveness */
+  html {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: 0 16px;
+  }
+
+  h1 { font-size: 2.5rem !important; }
+  h2 { font-size: 2rem !important; }
+  h3 { font-size: 1.5rem !important; }
+  
+  .hero {
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
+  
+  .featured-grid, .photography-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .sentient-fab {
+    transform: scale(0.8) !important;
+    bottom: 16px !important;
+    left: 16px !important;
+  }
+
+  .eye-of-agamotto {
+    transform: scale(0.6);
+    bottom: 0px !important;
+    right: 0px !important;
+  }
 }
+
+@media (max-width: 480px) {
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.75rem !important; }
+  
+  .btn-primary, .mystic-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+

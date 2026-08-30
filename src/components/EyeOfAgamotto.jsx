@@ -65,7 +65,7 @@ const EyeModel = () => {
 
 export default function EyeOfAgamotto() {
   return (
-    <div style={{
+    <div className="eye-of-agamotto" style={{
       position: 'fixed',
       bottom: '30px',
       right: '30px',
