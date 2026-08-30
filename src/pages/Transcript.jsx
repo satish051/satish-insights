@@ -13,8 +13,6 @@ Leverage is the force multiplier for your judgment.
 In the modern age, capital and labor are no longer the only forms of leverage.
 Code and media are permissionless leverage. They are the leverage behind the newly rich. 
 You can create software and media that works for you while you sleep.
-
-*This transcript is a placeholder. You can update this text by editing the \`src/pages/Transcript.jsx\` file.*
 `;
 
 export default function Transcript() {
