@@ -48,11 +48,19 @@ const TiltCard = ({ children, className = '', style = {} }) => {
 
   const spotlightColor = 'rgba(243, 156, 18, 0.15)'; // Eldritch Orange
 
+  // Define geometric shards for the mirror dimension effect
+  const shards = [
+    'polygon(0% 0%, 100% 0%, 80% 40%, 0% 60%)',
+    'polygon(100% 0%, 100% 100%, 60% 80%, 80% 40%)',
+    'polygon(0% 60%, 80% 40%, 60% 80%, 0% 100%)',
+    'polygon(60% 80%, 100% 100%, 0% 100%)'
+  ];
+
   return (
     <div
       ref={cardRef}
       className={className}
-      style={{ perspective: '1000px', ...style }}
+      style={{ perspective: '1200px', ...style, position: 'relative' }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -64,41 +72,62 @@ const TiltCard = ({ children, className = '', style = {} }) => {
           position: 'relative',
           width: '100%',
           height: '100%',
+          transformStyle: 'preserve-3d',
         }}
       >
-        {/* Children (links/cards) — always on top and fully clickable */}
-        <div style={{ position: 'relative', zIndex: 2 }}>
-          {children}
-        </div>
+        {/* The Glowing Void underneath the card */}
+        <div 
+          style={{
+            position: 'absolute',
+            inset: '-10px',
+            background: 'var(--accent-gradient)',
+            opacity: isHovered ? 0.4 : 0,
+            transition: 'opacity 0.4s ease',
+            filter: 'blur(10px)',
+            zIndex: 0,
+          }}
+        />
 
-        {/* Spotlight + shine overlays — purely decorative, no pointer events */}
-        {isHovered && !isMobile && (
-          <>
+        {/* The Fractured Shards */}
+        <div style={{ position: 'relative', zIndex: 1, width: '100%', height: '100%', transformStyle: 'preserve-3d' }}>
+          {shards.map((clipPath, index) => (
             <div
+              key={index}
               style={{
                 position: 'absolute',
                 inset: 0,
-                pointerEvents: 'none',
-                background: `radial-gradient(circle 200px at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 100%)`,
-                zIndex: 3,
-                borderRadius: 'inherit',
+                clipPath,
+                backgroundColor: 'var(--panel-bg)',
+                border: '1px solid var(--panel-border)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                transform: isHovered && !isMobile
+                  ? `translateZ(${10 + index * 5}px) scale(1.02)`
+                  : 'translateZ(0px) scale(1)',
+                transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', // springy pop
               }}
             />
-            <div
-              style={{
-                position: 'absolute',
-                top: '-100%',
-                left: '-100%',
-                width: '50%',
-                height: '300%',
-                background: 'linear-gradient(to right, transparent, rgba(255,215,0,0.1), transparent)', // Gold shine
-                transform: `rotate(45deg) translateX(${mousePosition.x - 200}px)`,
-                pointerEvents: 'none',
-                zIndex: 3,
-                transition: 'transform 0.1s ease-out',
-              }}
-            />
-          </>
+          ))}
+          
+          {/* Actual content layered above the shards */}
+          <div style={{ position: 'relative', zIndex: 2, transform: isHovered ? 'translateZ(30px)' : 'translateZ(0px)', transition: 'transform 0.4s ease' }}>
+            {children}
+          </div>
+        </div>
+
+        {/* Spotlight overlay (dynamic light following cursor) */}
+        {isHovered && !isMobile && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              pointerEvents: 'none',
+              background: `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 100%)`,
+              zIndex: 3,
+              borderRadius: 'inherit',
+              transform: 'translateZ(40px)', // float light above card
+            }}
+          />
         )}
       </motion.div>
     </div>
