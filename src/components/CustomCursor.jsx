@@ -104,16 +104,17 @@ export default function CustomCursor() {
         }
       `}</style>
 
-      {/* Trails */}
-      {[0.1, 0.2, 0.3].map((delay, i) => {
-        const opacities = [0.4, 0.25, 0.1];
+      {/* Magic Trails */}
+      {[0.05, 0.1, 0.15, 0.2].map((delay, i) => {
+        const opacities = [0.6, 0.4, 0.2, 0.1];
+        const sizes = [6, 4, 3, 2];
         return (
           <motion.div
             key={i}
             className="custom-cursor-trail"
             animate={{
-              x: mousePosition.x - 2,
-              y: mousePosition.y - 2,
+              x: mousePosition.x - sizes[i] / 2,
+              y: mousePosition.y - sizes[i] / 2,
               scale: cursorVariant !== "default" ? 0 : 1
             }}
             transition={{
@@ -126,10 +127,11 @@ export default function CustomCursor() {
               position: 'fixed',
               top: 0,
               left: 0,
-              width: 4,
-              height: 4,
+              width: sizes[i],
+              height: sizes[i],
               borderRadius: "50%",
-              backgroundColor: "var(--accent-cyan)",
+              backgroundColor: "#F39C12",
+              boxShadow: "0 0 10px #F39C12",
               opacity: opacities[i],
               pointerEvents: 'none',
               zIndex: 9998
@@ -138,7 +140,7 @@ export default function CustomCursor() {
         );
       })}
 
-      {/* Main Dot */}
+      {/* Main Spark */}
       <motion.div
         className="custom-cursor-dot"
         animate={{
@@ -154,7 +156,8 @@ export default function CustomCursor() {
           width: 8,
           height: 8,
           borderRadius: "50%",
-          backgroundColor: "var(--text-main)",
+          backgroundColor: "#FFD700",
+          boxShadow: "0 0 15px #FFD700",
           pointerEvents: 'none',
           zIndex: 9999
         }}

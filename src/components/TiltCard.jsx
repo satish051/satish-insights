@@ -42,8 +42,7 @@ const TiltCard = ({ children, className = '', style = {} }) => {
     }
   }, [isMobile, rotateX, rotateY]);
 
-  const isDark = typeof document !== 'undefined' && document.body.classList.contains('dark');
-  const spotlightColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(14, 165, 233, 0.05)';
+  const spotlightColor = 'rgba(243, 156, 18, 0.15)'; // Eldritch Orange
 
   return (
     <div
@@ -76,7 +75,7 @@ const TiltCard = ({ children, className = '', style = {} }) => {
                 position: 'absolute',
                 inset: 0,
                 pointerEvents: 'none',
-                background: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 100%)`,
+                background: `radial-gradient(circle 200px at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 100%)`,
                 zIndex: 3,
                 borderRadius: 'inherit',
               }}
@@ -88,7 +87,7 @@ const TiltCard = ({ children, className = '', style = {} }) => {
                 left: '-100%',
                 width: '50%',
                 height: '300%',
-                background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent)',
+                background: 'linear-gradient(to right, transparent, rgba(255,215,0,0.1), transparent)', // Gold shine
                 transform: `rotate(45deg) translateX(${mousePosition.x - 200}px)`,
                 pointerEvents: 'none',
                 zIndex: 3,
