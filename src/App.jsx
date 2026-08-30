@@ -16,24 +16,14 @@ import ParticleField from './components/ParticleField';
 
 const PageTransition = ({ children }) => {
   return (
-    <>
-      <motion.div
-        initial={{ scaleX: 1, originX: 1 }}
-        animate={{ scaleX: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }}
-        exit={{ scaleX: 1, originX: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'var(--accent-gradient)',
-          zIndex: 9999,
-          pointerEvents: 'none'
-        }}
-      />
+    <motion.div
+      initial={{ opacity: 0, rotateY: 90, scale: 0.5 }}
+      animate={{ opacity: 1, rotateY: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" } }}
+      exit={{ opacity: 0, rotateY: -90, scale: 0.5, transition: { duration: 0.4, ease: "easeIn" } }}
+      style={{ transformOrigin: 'center', perspective: '1200px', width: '100%' }}
+    >
       {children}
-    </>
+    </motion.div>
   );
 };
 

@@ -4,32 +4,35 @@ html {
 }
 
 :root {
-  --bg-color: #f8fafc;
-  --panel-bg: rgba(255, 255, 255, 0.8);
-  --panel-border: rgba(0, 0, 0, 0.08);
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --accent-cyan: #0ea5e9;
-  --accent-purple: #8b5cf6;
-  --accent-gradient: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-  --bg-gradient-1: rgba(14, 165, 233, 0.08);
-  --bg-gradient-2: rgba(139, 92, 246, 0.08);
-  --header-bg: rgba(248, 250, 252, 0.85);
+  --bg-color: #0B0C10; /* Obsidian */
+  --panel-bg: rgba(26, 26, 46, 0.7); /* Deep Indigo */
+  --panel-border: rgba(243, 156, 18, 0.4); /* Glowing Orange */
+  --text-main: #D1D5DB; /* Soft off-white */
+  --text-muted: #9CA3AF;
+  --accent-cyan: #F39C12; /* Remapped to Eldritch Orange */
+  --accent-purple: #FFD700; /* Remapped to Bright Gold */
+  --accent-gradient: linear-gradient(135deg, #F39C12, #FFD700);
+  --bg-gradient-1: rgba(243, 156, 18, 0.1);
+  --bg-gradient-2: rgba(255, 215, 0, 0.1);
+  --header-bg: rgba(11, 12, 16, 0.85);
+
+  --success-stone: #00FF51;
+  --error-crimson: #DC143C;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-serif: 'Cinzel', 'Playfair Display', Georgia, serif;
 }
 
 body.dark {
-  --bg-color: #0b0f19;
-  --panel-bg: rgba(20, 25, 40, 0.6);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --bg-gradient-1: rgba(6, 182, 212, 0.08);
-  --bg-gradient-2: rgba(139, 92, 246, 0.08);
-  --header-bg: rgba(11, 15, 25, 0.8);
-  --accent-cyan: #06b6d4;
+  --bg-color: #0B0C10;
+  --panel-bg: rgba(26, 26, 46, 0.7);
+  --panel-border: rgba(243, 156, 18, 0.4);
+  --text-main: #D1D5DB;
+  --text-muted: #9CA3AF;
+  --bg-gradient-1: rgba(243, 156, 18, 0.1);
+  --bg-gradient-2: rgba(255, 215, 0, 0.1);
+  --header-bg: rgba(11, 12, 16, 0.85);
+  --accent-cyan: #F39C12;
 }
 
 * {
@@ -140,21 +143,37 @@ main {
 
 .glass-panel {
   background: var(--panel-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--panel-border);
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 4px; /* Sharp corners */
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.2), inset 0 0 20px rgba(243, 156, 18, 0.05);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: linear-gradient(135deg, transparent 40%, rgba(243, 156, 18, 0.8) 50%, transparent 60%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .glass-panel:hover {
-  transform: translateY(-8px) scale(1.01);
-  border-color: transparent;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 20px rgba(14, 165, 233, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  background-image: linear-gradient(var(--panel-bg), var(--panel-bg)), linear-gradient(135deg, #0ea5e9, #8b5cf6, #f43f5e, #10b981, #0ea5e9);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 25px rgba(243, 156, 18, 0.5), inset 0 0 15px rgba(243, 156, 18, 0.2);
+}
+
+.glass-panel:hover::before {
+  opacity: 1;
 }
 
 .text-gradient {
@@ -204,77 +223,72 @@ main {
 .delay-3 { animation-delay: 0.3s; }
 .delay-4 { animation-delay: 0.4s; }
 
-/* Buttons */
-.btn-primary {
-  background: var(--accent-gradient);
-  color: white;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1rem;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
-}
-
-.btn-secondary {
+/* Buttons - Mystic Arts Override */
+.btn-primary, .btn-secondary, .mystic-btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
   background: transparent;
+  border: 1px solid var(--accent-cyan);
   color: var(--text-main);
-  border: 1px solid var(--panel-border);
   padding: 14px 32px;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1rem;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.1), inset 0 0 10px rgba(243, 156, 18, 0.1);
+  transition: all 0.4s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  z-index: 1;
+  cursor: pointer;
   text-decoration: none;
 }
 
-.btn-secondary:hover {
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-  background: rgba(14, 165, 233, 0.05);
+.btn-primary:hover, .btn-secondary:hover, .mystic-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(243, 156, 18, 0.4), inset 0 0 20px rgba(243, 156, 18, 0.2);
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+  background: rgba(243, 156, 18, 0.05);
 }
 
-/* Button ripple effect */
-.btn-primary, .btn-secondary {
+.mystic-btn-content {
   position: relative;
-  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.btn-primary::after, .btn-secondary::after {
-  content: '';
+.mystic-spell {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  width: 150%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.btn-primary:active::after, .btn-secondary:active::after {
-  width: 300px;
-  height: 300px;
-  opacity: 0;
-  transition: 0s;
+.mystic-spell.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0.3;
+}
+
+.spell-circle {
+  width: 100%;
+  height: 100%;
+  animation: spellRotate 10s linear infinite;
+}
+
+@keyframes spellRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Hero Badge */
