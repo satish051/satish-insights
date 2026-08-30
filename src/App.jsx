@@ -16,10 +16,11 @@ import ParticleField from './components/ParticleField';
 import { mysticAudio } from './utils/mysticAudio';
 import EyeOfAgamotto from './components/EyeOfAgamotto';
 import SentientFAB from './components/SentientFAB';
+import MysticIntroSequence from './components/MysticIntroSequence';
 
 const PageTransition = ({ children }) => {
   React.useEffect(() => {
-    mysticAudio.playPortalOpen();
+    try { mysticAudio.playPortalOpen(); } catch(e){}
   }, []);
 
   return (
@@ -60,11 +61,26 @@ const PageTransition = ({ children }) => {
 
 function App() {
   const location = useLocation();
+  const [showIntro, setShowIntro] = React.useState(() => {
+    // Only show intro once per session
+    return !sessionStorage.getItem('hasSeenIntro');
+  });
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem('hasSeenIntro', 'true');
+    setShowIntro(false);
+  };
 
   return (
     <>
-      <CustomCursor />
-      <ScrollToTop />
+      <AnimatePresence>
+        {showIntro && <MysticIntroSequence onComplete={handleIntroComplete} />}
+      </AnimatePresence>
+
+      {!showIntro && (
+        <>
+          <CustomCursor />
+          <ScrollToTop />
       
       <ParticleField />
       
@@ -88,6 +104,8 @@ function App() {
         </AnimatePresence>
         <Footer />
       </div>
+        </>
+      )}
     </>
   );
 }
