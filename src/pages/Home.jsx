@@ -364,7 +364,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               onClick={() => setSelectedPhoto(photo)}
-              style={{ cursor: 'pointer', y: photoTransforms[index] }}
+              style={{ cursor: 'pointer' }}
             >
               <motion.img layoutId={`photo-${photo.id}`} src={photo.url} alt={photo.title} />
               <div className="photo-overlay">
@@ -419,26 +419,26 @@ export default function Home() {
             >
               <X size={24} />
             </button>
-            <motion.div
-              layoutId={`photo-${selectedPhoto.id}`}
+            <div
               style={{
                 position: 'relative',
                 maxWidth: '1200px',
                 width: '100%',
-                maxHeight: '90vh',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'center',
+                overflowY: 'auto'
               }}
             >
-              <img
+              <motion.img
+                layoutId={`photo-${selectedPhoto.id}`}
                 src={selectedPhoto.url}
                 alt={selectedPhoto.title}
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'contain',
-                  maxHeight: '80vh',
+                  maxHeight: '75vh',
                   borderRadius: '8px'
                 }}
               />
@@ -448,6 +448,7 @@ export default function Home() {
                 transition={{ delay: 0.2 }}
                 style={{
                   marginTop: '24px',
+                  paddingBottom: '24px',
                   textAlign: 'center',
                   color: '#fff'
                 }}
@@ -459,7 +460,7 @@ export default function Home() {
                   {selectedPhoto.description}
                 </p>
               </motion.div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
