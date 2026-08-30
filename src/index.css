@@ -4,17 +4,19 @@ html {
 }
 
 :root {
-  --bg-color: #0B0C10; /* Obsidian */
-  --panel-bg: rgba(26, 26, 46, 0.7); /* Deep Indigo */
-  --panel-border: rgba(243, 156, 18, 0.4); /* Glowing Orange */
-  --text-main: #D1D5DB; /* Soft off-white */
-  --text-muted: #9CA3AF;
-  --accent-cyan: #F39C12; /* Remapped to Eldritch Orange */
-  --accent-purple: #FFD700; /* Remapped to Bright Gold */
-  --accent-gradient: linear-gradient(135deg, #F39C12, #FFD700);
-  --bg-gradient-1: rgba(243, 156, 18, 0.1);
-  --bg-gradient-2: rgba(255, 215, 0, 0.1);
-  --header-bg: rgba(11, 12, 16, 0.85);
+  /* Daylight Mystic (Light Mode) */
+  --bg-color: #F9F9F6; /* Alabaster */
+  --panel-bg: rgba(241, 239, 231, 0.7); /* Parchment */
+  --panel-border: rgba(200, 90, 23, 0.3); /* Deep Burnt Orange */
+  --text-main: #2C2C2C;
+  --text-muted: #5A5A5A;
+  --accent-cyan: #C85A17; /* Deep Burnt Orange */
+  --accent-purple: #B8860B; /* Solid Brass/Gold */
+  --accent-gradient: linear-gradient(135deg, #C85A17, #B8860B);
+  --bg-gradient-1: rgba(200, 90, 23, 0.05);
+  --bg-gradient-2: rgba(184, 134, 11, 0.05);
+  --header-bg: rgba(249, 249, 246, 0.85);
+  --shadow-magic: rgba(200, 90, 23, 0.15); /* Warm amber shadow */
 
   --success-stone: #00FF51;
   --error-crimson: #DC143C;
@@ -24,15 +26,19 @@ html {
 }
 
 body.dark {
-  --bg-color: #0B0C10;
-  --panel-bg: rgba(26, 26, 46, 0.7);
-  --panel-border: rgba(243, 156, 18, 0.4);
-  --text-main: #D1D5DB;
+  /* Void Mystic (Dark Mode) */
+  --bg-color: #0B0C10; /* Obsidian */
+  --panel-bg: rgba(26, 26, 46, 0.7); /* Deep Indigo */
+  --panel-border: rgba(243, 156, 18, 0.4); /* Glowing Orange */
+  --text-main: #D1D5DB; /* Soft off-white */
   --text-muted: #9CA3AF;
+  --accent-cyan: #F39C12; /* Eldritch Orange */
+  --accent-purple: #FFD700; /* Bright Gold */
+  --accent-gradient: linear-gradient(135deg, #F39C12, #FFD700);
   --bg-gradient-1: rgba(243, 156, 18, 0.1);
   --bg-gradient-2: rgba(255, 215, 0, 0.1);
   --header-bg: rgba(11, 12, 16, 0.85);
-  --accent-cyan: #F39C12;
+  --shadow-magic: rgba(243, 156, 18, 0.2); /* Neon glowing shadow */
 }
 
 * {
@@ -560,6 +566,31 @@ main {
 
 .nav-links a:hover {
   color: var(--text-main);
+}
+
+/* A11y Rune Text */
+.rune-cipher-text {
+  color: transparent !important;
+  position: relative;
+  display: inline-block;
+}
+
+.rune-cipher-text::before {
+  content: attr(data-rune);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--text-main);
+  white-space: pre;
+}
+
+body.dark .rune-cipher-text::before {
+  text-shadow: 0 0 10px rgba(243, 156, 18, 0.4);
+}
+
+:root:not(body.dark) .rune-cipher-text::before {
+  color: var(--accent-cyan);
+  mix-blend-mode: color-burn;
 }
 
 /* Hero Section */

@@ -2,12 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
+import { RenderEngineProvider } from './context/RenderEngineContext.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RenderEngineProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </RenderEngineProvider>
   </React.StrictMode>,
 )

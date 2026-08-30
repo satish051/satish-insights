@@ -9,6 +9,7 @@ import Newsletter from '../components/Newsletter';
 import MagneticButton from '../components/MagneticButton';
 import RevealText from '../components/RevealText';
 import TiltCard from '../components/TiltCard';
+import RuneHeading from '../components/RuneHeading';
 
 const TICKER_ITEMS = [
   '✦ Technology', '✦ Money', '✦ Life & Growth', '✦ Software', '✦ Wealth', '✦ Mindset',
@@ -220,7 +221,7 @@ export default function Home() {
           <div className="container" style={{ paddingTop: '24px', paddingBottom: '16px' }}>
             <div className="section-header" style={{ marginBottom: '16px' }}>
               <RevealText as="span" className="section-eyebrow">Built & Shipped</RevealText>
-              <RevealText as="h2" className="section-title">My Works</RevealText>
+              <RuneHeading className="section-title" delay={200}>My Works</RuneHeading>
             </div>
           </div>
 
@@ -279,7 +280,7 @@ export default function Home() {
       <section id="insights" className="featured container" style={{ paddingTop: '80px' }}>
         <div className="section-header">
           <RevealText as="span" className="section-eyebrow">Fresh Off the Press</RevealText>
-          <RevealText as="h2" className="section-title">Latest Insights</RevealText>
+          <RuneHeading className="section-title">Latest Insights</RuneHeading>
         </div>
         <div className="featured-grid">
           {articles.map((article, index) => (
@@ -311,7 +312,7 @@ export default function Home() {
       <section id="photography" className="featured container" style={{ paddingTop: '80px' }}>
         <div className="section-header">
           <RevealText as="span" className="section-eyebrow">Through The Lens</RevealText>
-          <RevealText as="h2" className="section-title">Photography</RevealText>
+          <RuneHeading className="section-title">Photography</RuneHeading>
           <p style={{ marginTop: '16px', color: 'var(--text-muted)' }}>Capturing moments, geometry, and light. A visual diary of my passion.</p>
         </div>
         
