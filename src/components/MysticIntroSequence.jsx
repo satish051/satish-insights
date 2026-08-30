@@ -6,34 +6,24 @@ export default function MysticIntroSequence({ onComplete }) {
   const [stage, setStage] = useState(0);
 
   useEffect(() => {
-    // We can't auto-play audio reliably without interaction, 
-    // but we can try playing it as the sequence progresses if the user happened to click.
-    // If not, it will just be a visual spectacle.
-
-    // Sequence Timing
     // 0.0s - Stage 0: The Spark
     const t1 = setTimeout(() => {
-      setStage(1); // 1.0s - Stage 1: The Flipbook
+      setStage(2); // 1.0s - Stage 2: Seal of Vishanti
     }, 1000);
 
     const t2 = setTimeout(() => {
-      setStage(2); // 3.5s - Stage 2: Seal of Vishanti
-    }, 3500);
+      setStage(3); // 2.5s - Stage 3: The Breach
+      try { mysticAudio.playPortalOpen(); } catch(e){}
+    }, 2500);
 
     const t3 = setTimeout(() => {
-      setStage(3); // 5.0s - Stage 3: The Breach
-      try { mysticAudio.playPortalOpen(); } catch(e){}
-    }, 5000);
-
-    const t4 = setTimeout(() => {
-      onComplete(); // 6.5s - Intro Finished
-    }, 6500);
+      onComplete(); // 4.0s - Intro Finished
+    }, 4000);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
-      clearTimeout(t4);
     };
   }, [onComplete]);
 
@@ -66,35 +56,6 @@ export default function MysticIntroSequence({ onComplete }) {
               boxShadow: '0 0 20px 5px #F39C12, 0 0 40px 10px #FFD700'
             }}
           />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {/* Stage 1: The Flipbook */}
-        {stage === 1 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
-            transition={{ duration: 0.3 }}
-            className="intro-flipbook"
-            style={{
-              fontSize: 'clamp(3rem, 10vw, 8rem)',
-              fontWeight: 900,
-              fontFamily: 'system-ui, sans-serif',
-              letterSpacing: '-2px',
-              textTransform: 'uppercase',
-              color: 'transparent',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              // Using CSS repeating gradients and rapid animation to simulate the flashing images
-              backgroundImage: 'repeating-conic-gradient(from 0deg, #0B0C10 0deg 10deg, #F39C12 10deg 20deg, #FFD700 20deg 30deg, #8B5CF6 30deg 40deg)',
-              backgroundSize: '200% 200%',
-              animation: 'flipbook-flash 0.1s infinite alternate'
-            }}
-          >
-            SATISH INSIGHTS
-          </motion.div>
         )}
       </AnimatePresence>
 
@@ -148,11 +109,6 @@ export default function MysticIntroSequence({ onComplete }) {
       </AnimatePresence>
 
       <style>{`
-        @keyframes flipbook-flash {
-          0% { background-position: 0% 0%; filter: hue-rotate(0deg); }
-          50% { background-position: 100% 100%; filter: hue-rotate(90deg); }
-          100% { background-position: 50% 50%; filter: hue-rotate(180deg); }
-        }
         .vishanti-lines {
           stroke-dasharray: 400;
           stroke-dashoffset: 400;
