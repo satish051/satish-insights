@@ -47,6 +47,13 @@ export default function CustomCursor() {
         this.life -= this.decay;
         this.vy += 0.15; // gravity
         this.vx *= 0.95; // friction
+        
+        // Floor collision
+        if (this.y + this.size > canvas.height) {
+          this.y = canvas.height - this.size;
+          this.vy *= -0.6; // bounce
+          this.vx *= 0.8; // extra friction on bounce
+        }
       }
       draw(ctx) {
         ctx.beginPath();
