@@ -129,7 +129,9 @@ export default function CustomCursor() {
       const velocity = Math.sqrt(dx * dx + dy * dy);
       lastMousePos = { x: e.clientX, y: e.clientY };
 
-      if (isHovering) {
+      // Only modulate pitch by velocity if we are NOT inside a card (which modulates by X/Y coordinates)
+      const target = e.target;
+      if (isHovering && !target.closest('.article-card') && !target.closest('.work-card')) {
         mysticAudio.updateHoverHum(velocity);
       }
       

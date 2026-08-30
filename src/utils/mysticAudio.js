@@ -102,6 +102,14 @@ class MysticAudioContext {
     this.humOscillator.frequency.setTargetAtTime(targetFreq, this.ctx.currentTime, 0.1);
   }
 
+  updateCardHum(xPct, yPct) {
+    if (!this.humOscillator || !this.humGain) return;
+    // Map xPct (-0.5 to 0.5) and yPct (-0.5 to 0.5) to a wide frequency range
+    // e.g., base 200, x modulates up to +300, y modulates up to +150
+    const targetFreq = 200 + ((xPct + 0.5) * 300) + ((yPct + 0.5) * 150);
+    this.humOscillator.frequency.setTargetAtTime(targetFreq, this.ctx.currentTime, 0.1);
+  }
+
   stopHoverHum() {
     if (!this.humGain || !this.humOscillator) return;
     this.humGain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.2);

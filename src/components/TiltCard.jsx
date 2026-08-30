@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useSpring } from 'framer-motion';
+import { mysticAudio } from '../utils/mysticAudio';
 
 const TiltCard = ({ children, className = '', style = {} }) => {
   const cardRef = useRef(null);
@@ -28,6 +29,9 @@ const TiltCard = ({ children, className = '', style = {} }) => {
     const yPct = mouseY / rect.height - 0.5;
     rotateX.set(-yPct * 12);
     rotateY.set(xPct * 12);
+    
+    // Dynamically change pitch based on X/Y coordinates over the card!
+    mysticAudio.updateCardHum(xPct, yPct);
   }, [isMobile, rotateX, rotateY]);
 
   const handleMouseEnter = useCallback(() => {
