@@ -1,18 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { mysticAudio } from '../utils/mysticAudio';
+import { useRenderEngine } from '../context/RenderEngineContext';
 
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [cursorVariant, setCursorVariant] = useState("default");
   const [cursorText, setCursorText] = useState("");
   const canvasRef = useRef(null);
+  const { isLowEndDevice } = useRenderEngine();
 
   useEffect(() => {
     let animationFrameId;
     let particles = [];
     let shockwaves = [];
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    
+    let lastMousePos = { x: -100, y: -100 };
+    let isHovering = false;
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -22,9 +29,12 @@ export default function CustomCursor() {
     window.addEventListener('resize', handleResize);
 
     class Spark {
-      constructor(x, y, isBurst = false) {
+      constructor(x, y, isBurst = false, isDark = true) {
         this.x = x;
         this.y = y;
+        this.isDark = isDark;
+        this.isBurst = isBurst;
+        
         if (isBurst) {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 12 + 5;
@@ -34,46 +44,62 @@ export default function CustomCursor() {
           this.decay = Math.random() * 0.04 + 0.02;
           this.size = Math.random() * 4 + 2;
         } else {
-          this.vx = (Math.random() - 0.5) * 4;
-          this.vy = (Math.random() - 0.5) * 4 - 2; // slight upward drift
+          // Dark = fast sparks, Light = slow dust
+          const speedMult = isDark ? 4 : 1.5;
+          this.vx = (Math.random() - 0.5) * speedMult;
+          this.vy = (Math.random() - 0.5) * speedMult + (isDark ? -2 : 0);
           this.life = 1;
-          this.decay = Math.random() * 0.03 + 0.02;
-          this.size = Math.random() * 3 + 1;
+          this.decay = Math.random() * (isDark ? 0.03 : 0.015) + (isDark ? 0.02 : 0.005);
+          this.size = Math.random() * (isDark ? 3 : 4) + 1;
         }
       }
       update() {
         this.x += this.vx;
         this.y += this.vy;
         this.life -= this.decay;
-        this.vy += 0.15; // gravity
-        this.vx *= 0.95; // friction
         
-        // Floor collision
-        if (this.y + this.size > canvas.height) {
-          this.y = canvas.height - this.size;
-          this.vy *= -0.6; // bounce
-          this.vx *= 0.8; // extra friction on bounce
+        if (this.isDark) {
+          this.vy += 0.15; // gravity
+          this.vx *= 0.95; // friction
+          // Floor collision
+          if (this.y + this.size > canvas.height) {
+            this.y = canvas.height - this.size;
+            this.vy *= -0.6;
+            this.vx *= 0.8;
+          }
+        } else {
+          // Motes float
+          this.vy += (Math.random() - 0.5) * 0.1;
+          this.vx += (Math.random() - 0.5) * 0.1;
+          this.vx *= 0.98;
+          this.vy *= 0.98;
         }
       }
       draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(243, 156, 18, ${this.life})`;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#F39C12';
+        if (this.isDark) {
+          ctx.fillStyle = `rgba(243, 156, 18, ${this.life})`;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#F39C12';
+        } else {
+          ctx.fillStyle = `rgba(184, 134, 11, ${this.life * 0.8})`; // Muted golden dust
+          ctx.shadowBlur = 0; // Less expensive for daylight
+        }
         ctx.fill();
         ctx.shadowBlur = 0;
       }
     }
 
     class Shockwave {
-      constructor(x, y) {
+      constructor(x, y, isDark) {
         this.x = x;
         this.y = y;
         this.radius = 5;
         this.life = 1;
         this.decay = 0.03;
         this.expansionSpeed = 15;
+        this.isDark = isDark;
       }
       update() {
         this.radius += this.expansionSpeed;
@@ -83,10 +109,12 @@ export default function CustomCursor() {
       draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255, 215, 0, ${this.life})`;
+        ctx.strokeStyle = this.isDark ? `rgba(255, 215, 0, ${this.life})` : `rgba(255, 255, 255, ${this.life * 0.8})`;
         ctx.lineWidth = 4 * this.life;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#F39C12';
+        if (this.isDark) {
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = '#F39C12';
+        }
         ctx.stroke();
         ctx.shadowBlur = 0;
       }
@@ -94,41 +122,61 @@ export default function CustomCursor() {
 
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-      // Emit sparks
-      for (let i = 0; i < 3; i++) {
-        particles.push(new Spark(e.clientX, e.clientY));
+      
+      // Calculate velocity for hum
+      const dx = e.clientX - lastMousePos.x;
+      const dy = e.clientY - lastMousePos.y;
+      const velocity = Math.sqrt(dx * dx + dy * dy);
+      lastMousePos = { x: e.clientX, y: e.clientY };
+
+      if (isHovering) {
+        mysticAudio.updateHoverHum(velocity);
+      }
+      
+      if (!isLowEndDevice) {
+        const isDark = document.body.classList.contains('dark');
+        const amount = isDark ? 3 : 1; // Less motes for daylight
+        for (let i = 0; i < amount; i++) {
+          particles.push(new Spark(e.clientX, e.clientY, false, isDark));
+        }
       }
     };
 
     const handleMouseDown = (e) => {
-      shockwaves.push(new Shockwave(e.clientX, e.clientY));
+      if (isLowEndDevice) return;
+      const isDark = document.body.classList.contains('dark');
+      shockwaves.push(new Shockwave(e.clientX, e.clientY, isDark));
       for (let i = 0; i < 50; i++) {
-        particles.push(new Spark(e.clientX, e.clientY, true));
+        particles.push(new Spark(e.clientX, e.clientY, true, isDark));
       }
     };
 
     const handleMouseOver = (e) => {
       const target = e.target;
+      let newVariant = "default";
+      let newText = "";
+      
       if (target.closest('.article-card')) {
-        setCursorText("Read");
-        setCursorVariant("text");
+        newText = "Read"; newVariant = "text";
       } else if (target.closest('.work-card')) {
-        setCursorText("Visit ↗");
-        setCursorVariant("text");
+        newText = "Visit ↗"; newVariant = "text";
       } else if (target.closest('.photo-item')) {
-        setCursorText("View");
-        setCursorVariant("text");
+        newText = "View"; newVariant = "text";
       } else if (target.closest('.cursor-grab') || target.classList?.contains('cursor-grab')) {
-        setCursorVariant("grab");
-      } else if (
-        target.closest('a') ||
-        target.closest('button') ||
-        target.classList?.contains('hover-target')
-      ) {
-        setCursorVariant("hover");
+        newVariant = "grab";
+      } else if (target.closest('a') || target.closest('button') || target.classList?.contains('hover-target')) {
+        newVariant = "hover";
+      }
+
+      setCursorVariant(newVariant);
+      setCursorText(newText);
+
+      if (newVariant !== "default") {
+        isHovering = true;
+        mysticAudio.startHoverHum();
       } else {
-        setCursorVariant("default");
-        setCursorText("");
+        isHovering = false;
+        mysticAudio.stopHoverHum();
       }
     };
 
@@ -163,9 +211,10 @@ export default function CustomCursor() {
       window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('resize', handleResize);
+      mysticAudio.stopHoverHum();
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isLowEndDevice]);
 
   const variants = {
     default: {
