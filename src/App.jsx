@@ -14,6 +14,8 @@ import NotFound from './pages/NotFound';
 import Transcript from './pages/Transcript';
 import ParticleField from './components/ParticleField';
 import { mysticAudio } from './utils/mysticAudio';
+import EyeOfAgamotto from './components/EyeOfAgamotto';
+import SentientFAB from './components/SentientFAB';
 
 const PageTransition = ({ children }) => {
   React.useEffect(() => {
@@ -65,6 +67,9 @@ function App() {
       <ScrollToTop />
       
       <ParticleField />
+      
+      <EyeOfAgamotto />
+      <SentientFAB />
       
       <div className="app-container">
         <Header />
