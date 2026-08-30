@@ -21,20 +21,31 @@ export default function CustomCursor() {
     window.addEventListener('resize', handleResize);
 
     class Spark {
-      constructor(x, y) {
+      constructor(x, y, isBurst = false) {
         this.x = x;
         this.y = y;
-        this.vx = (Math.random() - 0.5) * 4;
-        this.vy = (Math.random() - 0.5) * 4 - 2; // slight upward drift
-        this.life = 1;
-        this.decay = Math.random() * 0.03 + 0.02;
-        this.size = Math.random() * 3 + 1;
+        if (isBurst) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 12 + 5;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.life = 1.5;
+          this.decay = Math.random() * 0.04 + 0.02;
+          this.size = Math.random() * 4 + 2;
+        } else {
+          this.vx = (Math.random() - 0.5) * 4;
+          this.vy = (Math.random() - 0.5) * 4 - 2; // slight upward drift
+          this.life = 1;
+          this.decay = Math.random() * 0.03 + 0.02;
+          this.size = Math.random() * 3 + 1;
+        }
       }
       update() {
         this.x += this.vx;
         this.y += this.vy;
         this.life -= this.decay;
-        this.vy += 0.1; // gravity
+        this.vy += 0.15; // gravity
+        this.vx *= 0.95; // friction
       }
       draw(ctx) {
         ctx.beginPath();
@@ -52,6 +63,12 @@ export default function CustomCursor() {
       // Emit sparks
       for (let i = 0; i < 3; i++) {
         particles.push(new Spark(e.clientX, e.clientY));
+      }
+    };
+
+    const handleMouseDown = (e) => {
+      for (let i = 0; i < 50; i++) {
+        particles.push(new Spark(e.clientX, e.clientY, true));
       }
     };
 
@@ -94,11 +111,13 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', updateMousePosition);
     window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousedown', handleMouseDown);
     animate();
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
