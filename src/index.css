@@ -280,6 +280,7 @@ main {
 /* Hero Badge */
 .hero-badge {
   display: inline-flex;
+  align-self: center;
   align-items: center;
   gap: 8px;
   background: var(--panel-bg);
@@ -337,20 +338,23 @@ main {
 /* Marquee Ticker */
 .ticker-wrapper {
   overflow: hidden;
+  position: relative;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
   padding: 18px 0;
   border-top: 1px solid var(--panel-border);
   border-bottom: 1px solid var(--panel-border);
   margin: 60px 0;
   white-space: nowrap;
-  perspective: 800px;
+  display: flex;
+  align-items: center;
 }
 
 .ticker-track {
   display: inline-flex;
+  align-items: center;
   gap: 0;
   animation: ticker 30s linear infinite;
-  transform: rotateX(2deg);
-  transform-origin: center bottom;
 }
 
 .ticker-item {
