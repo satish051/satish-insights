@@ -68,6 +68,7 @@ export default function Home() {
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
     >
+      <div className={selectedPhoto ? "astral-frozen" : ""}>
       {/* Hero Section */}
       <motion.section
         id="home"
@@ -338,7 +339,8 @@ export default function Home() {
         </div>
       </section>
 
-      <Newsletter />
+        <Newsletter />
+      </div> {/* End astral-frozen wrapper */}
       
       <AnimatePresence>
         {selectedPhoto && (
@@ -346,14 +348,14 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="lightbox-overlay"
+            className="lightbox-overlay astral-modal"
             onClick={() => setSelectedPhoto(null)}
             style={{
               position: 'fixed',
               inset: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
+              backgroundColor: 'transparent',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
               zIndex: 99999,
               display: 'flex',
               alignItems: 'center',
@@ -382,6 +384,7 @@ export default function Home() {
               <X size={24} />
             </button>
             <div
+              className="astral-modal-content"
               style={{
                 position: 'relative',
                 maxWidth: '1200px',
@@ -401,7 +404,8 @@ export default function Home() {
                   height: '100%',
                   objectFit: 'contain',
                   maxHeight: '75vh',
-                  borderRadius: '8px'
+                  borderRadius: '8px',
+                  boxShadow: '0 0 50px rgba(139, 92, 246, 0.5)' // Ethereal purple glow
                 }}
               />
               <motion.div
@@ -412,13 +416,13 @@ export default function Home() {
                   marginTop: '24px',
                   paddingBottom: '24px',
                   textAlign: 'center',
-                  color: '#fff'
+                  color: 'var(--text-main)'
                 }}
               >
                 <motion.h3 layoutId={`title-${selectedPhoto.id}`} style={{ fontSize: '2rem', marginBottom: '8px' }}>
                   {selectedPhoto.title}
                 </motion.h3>
-                <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.1rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>
                   {selectedPhoto.description}
                 </p>
               </motion.div>

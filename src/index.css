@@ -593,6 +593,19 @@ body.dark .rune-cipher-text::before {
   mix-blend-mode: color-burn;
 }
 
+/* Astral Projection Modal Effects */
+.astral-frozen {
+  transition: filter 0.5s ease-in-out;
+}
+
+body.dark .astral-frozen {
+  filter: grayscale(100%) blur(4px);
+}
+
+:root:not(body.dark) .astral-frozen {
+  filter: brightness(150%) blur(5px) contrast(80%);
+}
+
 /* Hero Section */
 .hero {
   padding: 80px 0 60px;
