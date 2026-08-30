@@ -1,14 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [cursorVariant, setCursorVariant] = useState("default");
   const [cursorText, setCursorText] = useState("");
+  const canvasRef = useRef(null);
 
   useEffect(() => {
+    let animationFrameId;
+    let particles = [];
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    class Spark {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 4;
+        this.vy = (Math.random() - 0.5) * 4 - 2; // slight upward drift
+        this.life = 1;
+        this.decay = Math.random() * 0.03 + 0.02;
+        this.size = Math.random() * 3 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life -= this.decay;
+        this.vy += 0.1; // gravity
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(243, 156, 18, ${this.life})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#F39C12';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
+      // Emit sparks
+      for (let i = 0; i < 3; i++) {
+        particles.push(new Spark(e.clientX, e.clientY));
+      }
     };
 
     const handleMouseOver = (e) => {
@@ -36,12 +80,27 @@ export default function CustomCursor() {
       }
     };
 
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw(ctx);
+        if (particles[i].life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
     window.addEventListener('mousemove', updateMousePosition);
     window.addEventListener('mouseover', handleMouseOver);
+    animate();
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -63,8 +122,8 @@ export default function CustomCursor() {
       width: 40,
       height: 40,
       borderRadius: "50%",
-      backgroundColor: "rgba(14, 165, 233, 0.1)",
-      borderColor: "rgba(14, 165, 233, 0)",
+      backgroundColor: "rgba(243, 156, 18, 0.1)",
+      borderColor: "rgba(243, 156, 18, 0)",
       scale: 1.5,
       opacity: 1
     },
@@ -74,8 +133,8 @@ export default function CustomCursor() {
       width: 40,
       height: 40,
       borderRadius: "50%",
-      backgroundColor: "rgba(14, 165, 233, 0.2)",
-      borderColor: "rgba(14, 165, 233, 0)",
+      backgroundColor: "rgba(243, 156, 18, 0.2)",
+      borderColor: "rgba(243, 156, 18, 0)",
       scale: 1.8,
       opacity: 0.8
     },
@@ -86,7 +145,7 @@ export default function CustomCursor() {
       height: 40,
       borderRadius: "8px",
       backgroundColor: "var(--panel-bg)",
-      borderColor: "var(--accent-cyan)",
+      borderColor: "#F39C12",
       scale: 1,
       opacity: 1
     }
@@ -98,47 +157,24 @@ export default function CustomCursor() {
     <>
       <style>{`
         @media (max-width: 768px) {
-          .custom-cursor-dot, .custom-cursor-outline, .custom-cursor-trail {
+          .custom-cursor-dot, .custom-cursor-outline, .cursor-canvas {
             display: none !important;
           }
         }
       `}</style>
 
-      {/* Magic Trails */}
-      {[0.05, 0.1, 0.15, 0.2].map((delay, i) => {
-        const opacities = [0.6, 0.4, 0.2, 0.1];
-        const sizes = [6, 4, 3, 2];
-        return (
-          <motion.div
-            key={i}
-            className="custom-cursor-trail"
-            animate={{
-              x: mousePosition.x - sizes[i] / 2,
-              y: mousePosition.y - sizes[i] / 2,
-              scale: cursorVariant !== "default" ? 0 : 1
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 28,
-              delay: delay
-            }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: sizes[i],
-              height: sizes[i],
-              borderRadius: "50%",
-              backgroundColor: "#F39C12",
-              boxShadow: "0 0 10px #F39C12",
-              opacity: opacities[i],
-              pointerEvents: 'none',
-              zIndex: 9998
-            }}
-          />
-        );
-      })}
+      {/* Spark Trail Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="cursor-canvas"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          pointerEvents: 'none',
+          zIndex: 9998
+        }}
+      />
 
       {/* Main Spark */}
       <motion.div
@@ -192,7 +228,7 @@ export default function CustomCursor() {
               fontWeight: 700,
               letterSpacing: '1px',
               textTransform: 'uppercase',
-              color: 'var(--accent-cyan)',
+              color: '#F39C12',
               whiteSpace: 'nowrap'
             }}
           >
