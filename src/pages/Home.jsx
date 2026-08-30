@@ -78,14 +78,14 @@ export default function Home() {
       <motion.section
         id="home"
         className="hero container"
-        style={{ y: heroY, opacity: heroOpacity, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '80px', paddingBottom: '40px' }}
+        style={{ y: heroY, opacity: heroOpacity, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '40px', paddingBottom: '20px', minHeight: 'calc(100vh - 120px)' }}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, type: 'spring' }}
           className="hero-badge"
-          style={{ marginBottom: '16px' }}
+          style={{ marginBottom: '12px' }}
         >
           <Sparkles size={14} /> Now Writing · Volume 1
         </motion.div>
@@ -97,7 +97,7 @@ export default function Home() {
           }}
           initial="hidden"
           animate="visible"
-          style={{ position: 'relative', zIndex: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', columnGap: '0.25em', rowGap: '0.1em' }}
+          style={{ position: 'relative', zIndex: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', columnGap: '0.25em', rowGap: '0.1em', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)' }}
         >
           {['Simple', 'ideas', 'about'].map((word, i) => (
             <motion.span key={i} variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
@@ -160,7 +160,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          style={{ margin: '0 auto 24px auto' }}
+          style={{ margin: '16px auto 24px auto', maxWidth: '600px', lineHeight: '1.5' }}
         >
           Exploring the intersections of modern code, financial strategy, and intentional design. Cutting through the noise to bring you actionable, engineered wisdom.
         </motion.p>
@@ -169,7 +169,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.65 }}
-          style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '32px' }}
+          style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '24px' }}
         >
           <MagneticButton className="btn-primary hover-target" onClick={() => window.location.href = '#insights'}>
             Explore Articles <ArrowRight size={18} />
@@ -185,7 +185,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.85 }}
-          style={{ marginBottom: '24px' }}
+          style={{ marginBottom: '16px' }}
         >
           {STATS.map((s, i) => (
             <div key={i} className="stat-item">
@@ -203,9 +203,9 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}
+          style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }}
         >
-          <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px' }}>Scroll to explore</span>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '2px' }}>Scroll to explore</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
