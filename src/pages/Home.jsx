@@ -78,7 +78,7 @@ export default function Home() {
       <motion.section
         id="home"
         className="hero container"
-        style={{ y: heroY, opacity: heroOpacity, position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '100px', paddingBottom: '40px' }}
+        style={{ y: heroY, opacity: heroOpacity, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '120px', paddingBottom: '60px' }}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -203,7 +203,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}
+          style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}
         >
           <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px' }}>Scroll to explore</span>
           <motion.div
