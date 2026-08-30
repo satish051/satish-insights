@@ -54,6 +54,27 @@ class MysticAudioContext {
     osc.stop(this.ctx.currentTime + 0.3);
   }
 
+  // Subtle mystical chime on hover enter
+  playHoverChime() {
+    if (!this.isInitialized) this.init();
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, this.ctx.currentTime + 0.3);
+    
+    gain.gain.setValueAtTime(0, this.ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.08, this.ctx.currentTime + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.5);
+    
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.5);
+  }
+
   // Continuous organic hum that changes pitch based on velocity
   startHoverHum() {
     if (!this.isInitialized) this.init();
