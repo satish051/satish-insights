@@ -78,14 +78,14 @@ export default function Home() {
       <motion.section
         id="home"
         className="hero container"
-        style={{ y: heroY, opacity: heroOpacity, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '120px', paddingBottom: '60px' }}
+        style={{ y: heroY, opacity: heroOpacity, position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '80px', paddingBottom: '40px' }}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, type: 'spring' }}
           className="hero-badge"
-          style={{ marginBottom: '24px' }}
+          style={{ marginBottom: '16px' }}
         >
           <Sparkles size={14} /> Now Writing · Volume 1
         </motion.div>
@@ -160,7 +160,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          style={{ margin: '0 auto 32px auto' }}
+          style={{ margin: '0 auto 24px auto' }}
         >
           Exploring the intersections of modern code, financial strategy, and intentional design. Cutting through the noise to bring you actionable, engineered wisdom.
         </motion.p>
@@ -169,7 +169,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.65 }}
-          style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '48px' }}
+          style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '32px' }}
         >
           <MagneticButton className="btn-primary hover-target" onClick={() => window.location.href = '#insights'}>
             Explore Articles <ArrowRight size={18} />
@@ -185,7 +185,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.85 }}
-          style={{ marginBottom: '40px' }}
+          style={{ marginBottom: '24px' }}
         >
           {STATS.map((s, i) => (
             <div key={i} className="stat-item">
@@ -203,7 +203,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}
+          style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}
         >
           <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px' }}>Scroll to explore</span>
           <motion.div
