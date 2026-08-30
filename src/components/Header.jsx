@@ -4,6 +4,8 @@ import { Zap, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 
+import { triggerRealityWarp } from '../utils/realityWarper';
+
 const NAV_ITEMS = [
   { name: 'Home', href: '/', isLink: true },
   { name: 'Works', href: '/#works' },
@@ -36,8 +38,10 @@ export default function Header() {
   }, []);
 
   const toggleTheme = () => {
-    document.body.classList.toggle('dark');
-    setIsDark(!isDark);
+    triggerRealityWarp(() => {
+      document.body.classList.toggle('dark');
+      setIsDark(!isDark);
+    });
   };
 
   const handleHomeClick = () => {
