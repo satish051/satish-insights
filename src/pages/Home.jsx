@@ -245,7 +245,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="video-container glass-panel">
-              <video src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" autoPlay loop muted playsInline></video>
+              <video src="/videos/concept-video.mp4" autoPlay loop muted playsInline></video>
             </div>
             <div className="video-glow"></div>
           </motion.div>
