@@ -10,6 +10,7 @@ export default function CustomCursor() {
   useEffect(() => {
     let animationFrameId;
     let particles = [];
+    let shockwaves = [];
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
@@ -58,6 +59,32 @@ export default function CustomCursor() {
       }
     }
 
+    class Shockwave {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 5;
+        this.life = 1;
+        this.decay = 0.03;
+        this.expansionSpeed = 15;
+      }
+      update() {
+        this.radius += this.expansionSpeed;
+        this.life -= this.decay;
+        this.expansionSpeed *= 0.92;
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 215, 0, ${this.life})`;
+        ctx.lineWidth = 4 * this.life;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#F39C12';
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+    }
+
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       // Emit sparks
@@ -67,6 +94,7 @@ export default function CustomCursor() {
     };
 
     const handleMouseDown = (e) => {
+      shockwaves.push(new Shockwave(e.clientX, e.clientY));
       for (let i = 0; i < 50; i++) {
         particles.push(new Spark(e.clientX, e.clientY, true));
       }
@@ -99,6 +127,15 @@ export default function CustomCursor() {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let i = shockwaves.length - 1; i >= 0; i--) {
+        shockwaves[i].update();
+        shockwaves[i].draw(ctx);
+        if (shockwaves[i].life <= 0) {
+          shockwaves.splice(i, 1);
+        }
+      }
+
       for (let i = particles.length - 1; i >= 0; i--) {
         particles[i].update();
         particles[i].draw(ctx);
