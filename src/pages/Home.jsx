@@ -236,7 +236,9 @@ export default function Home() {
             <h2 className="text-gradient">Visualized Wisdom</h2>
             <h3>The Concept of Leverage</h3>
             <p>Sometimes ideas are better understood through motion. Watch this short concept video breaking down how high-leverage individuals build outsized value with minimal effort.</p>
-            <button className="btn-primary" style={{ marginTop: '16px' }}>Read Full Transcript <ArrowRight size={18} /></button>
+            <Link to="/transcript" className="btn-primary" style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              Read Full Transcript <ArrowRight size={18} />
+            </Link>
           </motion.div>
           <motion.div
             className="video-player-wrapper"

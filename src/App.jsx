@@ -11,6 +11,7 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import CustomCursor from './components/CustomCursor';
 import NotFound from './pages/NotFound';
+import Transcript from './pages/Transcript';
 import ParticleField from './components/ParticleField';
 
 const PageTransition = ({ children }) => {
@@ -56,6 +57,7 @@ function App() {
               <Route path="/category/:id" element={<Category />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/transcript" element={<Transcript />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </PageTransition>
