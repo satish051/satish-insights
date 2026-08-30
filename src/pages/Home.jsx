@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, ExternalLink, Sparkles, TrendingUp, BookOpen, X, ChevronDown } from 'lucide-react';
+import { ArrowRight, ExternalLink, Sparkles, X } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { articles } from '../data/articles';
 import { works } from '../data/works';
@@ -8,18 +8,11 @@ import { photos } from '../data/photography';
 import Newsletter from '../components/Newsletter';
 import MagneticButton from '../components/MagneticButton';
 import RevealText from '../components/RevealText';
-import AnimatedCounter from '../components/AnimatedCounter';
 import TiltCard from '../components/TiltCard';
 
 const TICKER_ITEMS = [
   '✦ Technology', '✦ Money', '✦ Life & Growth', '✦ Software', '✦ Wealth', '✦ Mindset',
   '✦ AI', '✦ Investing', '✦ Photography', '✦ Productivity', '✦ Deep Work', '✦ Clarity', '✦ Simplicity'
-];
-
-const STATS = [
-  { icon: <BookOpen size={22} />, value: '12', suffix: '+', label: 'Insights Published' },
-  { icon: <TrendingUp size={22} />, value: '3', suffix: '', label: 'Projects Shipped' },
-  { icon: <Sparkles size={22} />, value: '100', suffix: '%', label: 'Signal, No Noise' },
 ];
 
 export default function Home() {
@@ -179,40 +172,6 @@ export default function Home() {
           </MagneticButton>
         </motion.div>
 
-        {/* Stats Row */}
-        <motion.div
-          className="stats-row"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85 }}
-          style={{ marginBottom: '16px' }}
-        >
-          {STATS.map((s, i) => (
-            <div key={i} className="stat-item">
-              <span className="stat-icon">{s.icon}</span>
-              <span className="stat-value">
-                <AnimatedCounter value={s.value} suffix={s.suffix} />
-              </span>
-              <span className="stat-label">{s.label}</span>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }}
-        >
-          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '2px' }}>Scroll to explore</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          >
-            <ChevronDown size={20} />
-          </motion.div>
-        </motion.div>
       </motion.section>
 
       {/* Marquee Ticker */}
