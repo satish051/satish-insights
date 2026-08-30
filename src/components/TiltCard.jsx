@@ -110,7 +110,7 @@ const TiltCard = ({ children, className = '', style = {} }) => {
           ))}
           
           {/* Actual content layered above the shards */}
-          <div style={{ position: 'relative', zIndex: 2, transform: isHovered ? 'translateZ(30px)' : 'translateZ(0px)', transition: 'transform 0.4s ease' }}>
+          <div style={{ position: 'relative', zIndex: 10, transform: isHovered ? 'translateZ(50px)' : 'translateZ(0px)', transition: 'transform 0.4s ease', pointerEvents: 'auto' }}>
             {children}
           </div>
         </div>
@@ -125,7 +125,7 @@ const TiltCard = ({ children, className = '', style = {} }) => {
               background: `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, ${spotlightColor}, transparent 100%)`,
               zIndex: 3,
               borderRadius: 'inherit',
-              transform: 'translateZ(40px)', // float light above card
+              transform: 'translateZ(40px)', // float light underneath content but above shards
             }}
           />
         )}

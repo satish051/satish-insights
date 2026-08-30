@@ -293,16 +293,16 @@ export default function Home() {
               transition={{ delay: index * 0.1 }}
             >
               <TiltCard>
-                <article className="article-card glass-panel" style={{ overflow: 'hidden', height: '100%', margin: 0 }}>
+                <Link to={'/article/' + article.slug} className="article-card glass-panel hover-target" style={{ overflow: 'hidden', height: '100%', margin: 0, display: 'block', textDecoration: 'none' }}>
                   <img src={article.image} alt={article.title} className="article-image" />
                   <div className="article-meta">
                     <span style={{ color: article.color }}>{article.category}</span>
                     <span>{article.date}</span>
                   </div>
-                  <h3>{article.title}</h3>
-                  <p>{article.excerpt}</p>
-                  <Link to={'/article/' + article.slug} className="read-more">Read Insight <ArrowRight size={16} /></Link>
-                </article>
+                  <h3 style={{ color: 'var(--text-main)' }}>{article.title}</h3>
+                  <p style={{ color: 'var(--text-muted)' }}>{article.excerpt}</p>
+                  <span className="read-more" style={{ marginTop: 'auto' }}>Read Insight <ArrowRight size={16} /></span>
+                </Link>
               </TiltCard>
             </motion.div>
           ))}
