@@ -174,9 +174,6 @@ export default function CustomCursor() {
       setCursorText(newText);
 
       if (newVariant !== "default") {
-        if (!isHovering) {
-          try { mysticAudio.playHoverChime(); } catch(e){}
-        }
         isHovering = true;
         mysticAudio.startHoverHum();
       } else {
