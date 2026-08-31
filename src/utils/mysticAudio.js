@@ -8,6 +8,14 @@ class MysticAudioContext {
 
   init() {
     if (this.isInitialized) return;
+    
+    // Check if the device lacks a mouse (touch-only devices)
+    this.isTouchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (this.isTouchOnly) {
+      this.isInitialized = true; // Mark initialized so we don't keep checking
+      return;
+    }
+
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.ctx = new AudioContext();
     this.isInitialized = true;
@@ -16,6 +24,7 @@ class MysticAudioContext {
   // Deep sine wave hum for Sling Ring
   playPortalOpen() {
     if (!this.isInitialized) this.init();
+    if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     
@@ -37,6 +46,7 @@ class MysticAudioContext {
   // High-pitch short release for shatter
   playShatter() {
     if (!this.isInitialized) this.init();
+    if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     
@@ -57,6 +67,7 @@ class MysticAudioContext {
   // Subtle mystical chime on hover enter
   playHoverChime() {
     if (!this.isInitialized) this.init();
+    if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     
@@ -78,6 +89,7 @@ class MysticAudioContext {
   // Continuous organic hum that changes pitch based on velocity
   startHoverHum() {
     if (!this.isInitialized) this.init();
+    if (!this.ctx) return;
     if (this.humOscillator) return;
 
     this.humOscillator = this.ctx.createOscillator();
